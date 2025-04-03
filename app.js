@@ -7,7 +7,7 @@ const ejsMate = require("ejs-mate");
 
 const Listing = require("./models/listing");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/wanderlust";
 main()
   .then(() => {
     console.log("Connected to MongoDB");
@@ -91,10 +91,10 @@ app.delete("/listings/:id", async (req, res) => {
 // });
 
 app.get("/", (req, res) => {
-  console.log("Working");
-  res.send("Hello World!");
+  res.redirect("/listings");
 });
 
-app.listen(8080, () => {
-  console.log("Server started on port 8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
